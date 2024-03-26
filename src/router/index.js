@@ -1,8 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { createRouter, createWebHistory } from "vue-router";
 import TaskView from "../views/TaskView.vue";
 import ManageTaskView from "../views/ManageTaskView.vue";
 import LoginView from "../views/LoginView.vue";
 import authService from "../services/authService";
+
 const routes = [
   {
     path: "/",

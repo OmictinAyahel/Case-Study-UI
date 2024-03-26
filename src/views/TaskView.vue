@@ -5,11 +5,17 @@
       <router-link to="/manage-task" class="create-task-button">+ Create Task</router-link>
     </div>
     <div class="grid-container">
-      <div class="task-section" v-if="todoTasks.length > 0">
+
+
+      <div class="task-section">
         <h2>To-Do Tasks</h2>
-        <TaskItem v-for="task in todoTasks" :key="task.id" :task="task" @request-completion="requestCompletion" />
+        <div v-if="todoTasks.length > 0" class="task-list">
+          <TaskItem v-for="task in todoTasks" :key="task.id" :task="task" 
+            @request-completion="requestCompletion" />
+        </div>
+        <p v-else>There are no to-do tasks listed.</p>
       </div>
-      <p v-else>There are no to-do tasks listed.</p>
+
       <div class="task-section">
         <h2>Prioritized Tasks</h2>
         <div v-if="prioritizedTasks.length > 0" class="task-list">
@@ -18,6 +24,7 @@
         </div>
         <p v-else>There are no prioritized tasks listed.</p>
       </div>
+
       <div class="stats-section">
         <h3>Total Tasks</h3>
         <p>{{ tasks.length - completedTasks.length }}</p>
@@ -35,45 +42,53 @@
     </div>
   </div>
 </template>
-<script>
-import authService from '@/services/authService';
-export default {
-  props: ['tasks'],
-  mounted() {
-    
-    //call the function for protecting the routes
-   this.authenticated();
-  },
 
+
+<script>
+// Importing authService module
+import authService from '@/services/authService';
+
+export default {
+  props: ['tasks'], // Define props for receiving tasks from parent component
+  mounted() {
+    // Executed after the component is mounted
+    // Call the function to check if user is authenticated
+    this.authenticated();
+  },
   methods: {
+    // Method to check if user is authenticated
     authenticated() {
-      // Check if user is authenticated function
+      // Check if user is authenticated using authService
       if (!authService.isAuthenticated()) {
         // If user is not authenticated, redirect to login page
         this.$router.replace('/login');
       }
     },
+    // Method to request completion of a task
     requestCompletion(taskId) {
-      // Request completion function using the id
+      // Emit the task ID to indicate completion request
       this.$emit('complete-task', taskId);
     },
   },
   computed: {
+    // Computed property to filter tasks that are not prioritized and not completed
     todoTasks() {
-      // Get the tasks that are not prioritized and not completed
       return this.tasks.filter(task => !task.prioritized && !task.completed);
     },
+    // Computed property to filter tasks that are prioritized and not completed
     prioritizedTasks() {
-      // Get the tasks that are prioritized and not completed
       return this.tasks.filter(task => task.prioritized && !task.completed);
     },
+    // Computed property to filter tasks that are completed
     completedTasks() {
-      // Get the tasks that are completed
       return this.tasks.filter(task => task.completed);
     }
   }
 };
 </script>
+
+
+
 <style scoped>
 html,
 body {
@@ -83,10 +98,8 @@ body {
 
 .task-view {
   padding: 20px;
-  background: #AEC2B6;
+  background: #f5f5f5; 
   min-height: 80vh;
-  overflow-x: hidden !important;
-  overflow-y: hidden !important;
 }
 
 .header {
@@ -103,7 +116,7 @@ h1 {
 
 .create-task-button {
   padding: 10px 20px;
-  background-color: #5F7464;
+  background-color: #007BFF;
   color: white;
   border-radius: 20px;
   text-decoration: none;
@@ -112,12 +125,12 @@ h1 {
 }
 
 .create-task-button:hover {
-  background-color: #007BFF;
+  background-color: #0056b3;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 

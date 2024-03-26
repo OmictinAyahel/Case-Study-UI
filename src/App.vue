@@ -6,7 +6,7 @@
           <router-link to="/tasks" class="nav-link-app">Tasks</router-link> |
           <router-link to="/manage-task" class="nav-link-app">Manage Task</router-link>
         </div>
-        <div class="nav-logout" hidden>
+        <div class="nav-logout">
           <button class="btn-logout" @click="logout">Logout</button>
         </div>
       </nav>
@@ -19,96 +19,120 @@
 </template>
 
 <script>
+// Importing authService module
 import authService from './services/authService';
 
 export default {
   data() {
+    // Initializing data properties
     return {
-      tasks: [],
-      authService: authService,
-      isAuthenticated: false,
+      tasks: [], // Array to store tasks
+      authService: authService, // Reference to authentication service
+      isAuthenticated: false, // Flag to track user authentication status
     };
   },
 
   beforeMount() {
+    // Executed before mounting the component
+    // Checking user authentication status
     console.log(authService.isAuthenticated)
     this.isAuthenticated = authService.isAuthenticated();
   },
   mounted() {
-    // Fetch tasks if load
+    // Executed after the component is mounted
+    // Fetching tasks
     this.fetchTasks();
   },
   methods: {
+    // Method to fetch tasks
     fetchTasks() {
-      //putting default value
+      // Putting default tasks into the tasks array
       this.tasks = [
         { id: '1', title: 'Task 1', description: 'General Cleaning.', prioritized: false },
         { id: '2', title: 'Task 2', description: 'Washing Dishes.', prioritized: true }
       ];
     },
+    // Method to add a task
     addTask(task) {
-      //putting the receive value in tasks array
+      // Adding the received task to the tasks array
       this.tasks.push(task);
     },
+    // Method to update a task
     updateTask(updatedTask) {
-      //updating the task in tasks array
+      // Updating the task in the tasks array
       const index = this.tasks.findIndex(task => task.id === updatedTask.id);
       if (index !== -1) {
         this.tasks.splice(index, 1, updatedTask);
       }
     },
+    // Method to delete a task
     deleteTask(taskId) {
-      //deleting the task in tasks array
+      // Deleting the task from the tasks array
       this.tasks = this.tasks.filter(task => task.id !== taskId);
     },
+    // Method to toggle task priority
     togglePrioritizeTask(taskId) {
-      //toggling the priority task in tasks array
+      // Toggling the priority of a task in the tasks array
       const task = this.tasks.find(task => task.id === taskId);
       if (task) {
         task.prioritized = !task.prioritized;
       }
     },
+    // Method to mark a task as completed
     completeTask(taskId) {
-      //completing the task in tasks array
+      // Finding the index of the task
       const taskIndex = this.tasks.findIndex(task => task.id === taskId);
       if (taskIndex !== -1) {
-        // Mark task as completed
+        // Marking task as completed
         this.tasks[taskIndex].completed = true;
+        // Updating tasks array
         this.tasks = [...this.tasks];
       }
     },
+    // Method to handle user logout
     logout() {
       authService.logout().then(() => {
-        // Reload the window upon route changes
+        // Reloading the window upon route changes
         window.location.reload();
+        // Navigating user to the home page
         this.$router.push('/');
       })
     }
   },
 };
 </script>
+
+
 <style scoped>
 html,
 body {
   overflow: hidden;
-  background-color: black !important;
+  background-color: #f5f5f5; 
 }
 
 .nav-app {
-  background-color: #ffffff;
+  background-color: #f9f9f9; 
   padding: 10px 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease; 
 }
 
 .nav-link-app {
-  text-decoration: underline;
-  color: black;
+  text-decoration: none; 
+  color: #333; 
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px; 
+  margin-right: 5px; 
+  margin-left: 5px;
+  transition: color 0.3s ease; 
+}
+
+.nav-link-app:hover {
+  color: #007bff; 
 }
 
 .nav-main {
@@ -128,14 +152,10 @@ body {
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
-.btn-logout{
-  background: #5F7464;
+.btn-logout:hover {
+  background-color: #0056b3; 
 }
-
-.btn-logout:hover{
-  background: #007bff;
-}
-
 </style>

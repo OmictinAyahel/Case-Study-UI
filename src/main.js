@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { createApp } from 'vue';
 import TaskItem from './components/TaskItem.vue';
 

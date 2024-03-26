@@ -38,77 +38,85 @@
     </div>
   </div>
 </template>
+
 <script>
+// Importing authService module
 import authService from '@/services/authService';
+
 export default {
-  props: ['tasks'],
+  props: ['tasks'], // Define props for receiving tasks from parent component
   data() {
+    // Initializing data properties
     return {
-      taskTitle: '',
-      taskDescription: '',
-      editingTitle: '',
-      editingDescription: '',
-      taskError: '',
-      selectedTaskId: null,
+      taskTitle: '', // Title of the new task
+      taskDescription: '', // Description of the new task
+      editingTitle: '', // Title of the task being edited
+      editingDescription: '', // Description of the task being edited
+      taskError: '', // Error message for task input validation
+      selectedTaskId: null, // ID of the selected task for editing
     };
   },
   mounted() {
-    //call the function for protecting the routes
+    // Executed after the component is mounted
+    // Call the function to check if user is authenticated
     this.authenticated();
   },
   methods: {
-    // Check if user is authenticated function
+    // Method to check if user is authenticated
     authenticated() {
+      // Redirect to login page if user is not authenticated
       if (!authService.isAuthenticated()) {
         this.$router.replace('/login');
       }
     },
   
-    // Add task
+    // Method to add a new task
     addTask() {
-      // Check if title and description are not empty
+      // Validate if title and description are not empty
       if (!this.taskTitle || !this.taskDescription) {
         this.taskError = 'Title and description cannot be empty ';
-
         return;
       }
 
-      //putting all the needed values in an object
+      // Create a new task object with provided details
       const newTask = {
-        id: Date.now().toString(),
-        title: this.taskTitle,
-        description: this.taskDescription,
-        prioritized: false,
+        id: Date.now().toString(), // Generate unique ID for the task
+        title: this.taskTitle, // Set task title
+        description: this.taskDescription, // Set task description
+        prioritized: false, // Initialize task as not prioritized
       };
-      this.taskTitleError = '';
-      this.taskDescriptionError = '';
-      //emit the new task (pass the object to the parent component)
+      // Clear any previous error messages
+      this.taskError = '';
+      // Emit the new task to the parent component
       this.$emit('add-task', newTask);
+      // Clear input fields after adding task
       this.taskTitle = '';
       this.taskDescription = '';
     },
+    // Method to select a task for editing
     selectTaskForEditing(task) {
-      //selecting the task for editing
+      // Set editing state with selected task details
       this.editingTitle = task.title;
       this.editingDescription = task.description;
       this.selectedTaskId = task.id;
     },
+    // Method to save updates made to a task
     saveUpdate() {
-      //function to update the selected task
-      //putting all the needed values in an object
+      // Create an updated task object with edited details
       const updatedTask = {
-        id: this.selectedTaskId,
-        title: this.editingTitle,
-        description: this.editingDescription,
-        prioritized: this.tasks.find(task => task.id === this.selectedTaskId)?.prioritized || false,
+        id: this.selectedTaskId, // Retain the original task ID
+        title: this.editingTitle, // Update task title
+        description: this.editingDescription, // Update task description
+        prioritized: this.tasks.find(task => task.id === this.selectedTaskId)?.prioritized || false, // Retain prioritization status
       };
-      //emit the updated task (pass the object to the parent component)
+      // Emit the updated task to the parent component
       this.$emit('update-task', updatedTask);
+      // Reset editing state/values after saving update
       this.resetEditingState();
     },
+    // Method to reset editing state/values
     resetEditingState() {
-
-      //resetting the editing state/values
+      // Reset all editing-related state/values
       this.taskTitle = '';
       this.taskDescription = '';
       this.editingTitle = '';
@@ -119,10 +127,11 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .manage-task {
   padding: 20px;
-  background: #AEC2B6;
+  background-color: #f0f0f0;
   max-width: 100%;
   min-height: 85vh;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -136,10 +145,10 @@ export default {
 .task-form-container,
 .task-list {
   flex: 1;
-  background: white;
+  background-color: #ffffff; 
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input-field,
@@ -147,13 +156,22 @@ export default {
 .edit-button,
 .delete-button,
 .priority-button {
-  width: calc(80% - 20px);
-  padding: 10px;
+  width: 100%;
+  padding: 8px 10px; 
   margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+}
+
+.input-field:focus,
+.action-button:hover,
+.edit-button:hover,
+.delete-button:hover,
+.priority-button:hover {
+  outline: none;
 }
 
 .action-button,
@@ -164,33 +182,24 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #CCD6A6;
-  color: #32465A;
-  margin-right: 10px;
-  width: 40%;
-  
+  background-color: #007BFF;
+  color: white;
+  font-size: 14px; 
+  width: 350px; 
+  margin-left: 20px;
 }
 
-.action-button:hover,
+.action-button{
+
+  margin-left: 150px;
+
+}
+
 .edit-button:hover,
+.action-button:hover,
 .delete-button:hover,
 .priority-button:hover {
-  opacity: 0.9;
-}
-
-.edit-button {
-  background-color: #7D8F69;
-  color: white;
-}
-
-.delete-button {
-  background-color: #7D8F69;
-  color: white;
-}
-
-.priority-button {
-  background-color: #7D8F69;
-  color: white;
+  background-color: #0056b3;
 }
 
 .task-item,
@@ -201,21 +210,20 @@ export default {
 .task-item span,
 .edit-fields input {
   display: block;
+  margin-bottom: 5px; 
+  margin-left: 20px; 
+  margin-top: 10px;
 }
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  margin-left: 30px;
+  
 }
 
 h1 {
-  color: #32465A;
+  color: #32465A; 
   margin-bottom: 20px;
- 
-}
-
-.buttons>button:last-child {
-  margin-right: 0;
 }
 
 .task-list {
@@ -223,10 +231,6 @@ h1 {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .task-form-container {

@@ -21,38 +21,44 @@
 </template>
 
 <script>
+// Importing authService module
 import authService from '@/services/authService';
 
 export default {
     data() {
+        // Initializing data properties
         return {
-            username: '',
-            password: '',
-            errorHandler: '',
+            username: '', // User input for username
+            password: '', // User input for password
+            errorHandler: '', // Error message handler
         };
     },
     mounted() {
-        //call the function for protecting the routes
+        // Executed after the component is mounted
+        // Call the function to check if user is authenticated
         this.authenticated();
     },
     methods: {
+        // Method to check if user is authenticated
         authenticated() {
-            // Check if user is authenticated function
+            // Check if user is authenticated using authService
             if (authService.isAuthenticated()) {
+                // Redirect to tasks page if authenticated
                 this.$router.replace('/tasks');
             }
         },
+        // Method to handle user login
         login() {
-            // Login function
+            // Login function using authService
             authService.login(this.username, this.password)
                 .then(() => {
-                    // Redirect to tasks page
+                    // Redirect to tasks page upon successful login
                     // Reload the window upon route changes
                     window.location.reload();
                     this.$router.replace('/tasks');
                 })
                 .catch(() => {
-                    // Display error message
+                    // Display error message for invalid credentials
                     this.errorHandler = 'Invalid username or password';
                 });
         }
@@ -60,13 +66,14 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #e9ecef;
+    background-color: #f5f5f5; 
 }
 
 .login-container {
@@ -74,7 +81,7 @@ export default {
     max-width: 350px;
     margin: auto;
     padding: 25px;
-    background-color: #AEC2B6;
+    background-color: #f9f9f9; 
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
@@ -87,33 +94,26 @@ input[type="password"] {
     border: 1px solid #ced4da;
     border-radius: 4px;
     background-color: #f8f9fa;
-    transition: border 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    transition: border-color 0.3s, background-color 0.3s; 
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border: 1px solid #007bff;
+    border-color: #007bff; 
     background-color: #e9ecef;
     outline: none;
 }
 
-input[type="text"]:hover,
-input[type="password"]:hover {
-    background-color: #f1f3f5;
-}
-
 .login-button {
-    width: 65%;
+    width: 100%;
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #5F7464; 
+    background-color: #007bff; 
     color: white;
-    font-weight: 600;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
-    text-align: center;
-    margin-left: 17%;
+    transition: background-color 0.3s, transform 0.2s; 
 }
 
 .login-button:hover {
@@ -127,8 +127,17 @@ input[type="password"]:hover {
 
 label {
     display: block;
-    margin-bottom: .5rem;
-    color: #495057;
+    margin-bottom: 0.5rem;
+    color: #333; 
 }
 
+h1 {
+    margin-bottom: 20px;
+    color: #333; 
+}
+
+h5 {
+    color: red;
+    margin-bottom: 20px;
+}
 </style>
