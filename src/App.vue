@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <nav class="nav-app">
-        <router-link to="/" class="nav-link-app">Tasks</router-link> | 
+        <router-link to="/tasks" class="nav-link-app">Tasks</router-link> | 
         <router-link to="/manage-task" class="nav-link-app">Manage Task</router-link>
       </nav>
     </header>
@@ -26,36 +26,44 @@ export default {
     };
   },
   mounted() {
+    // Fetch tasks if load
     this.fetchTasks();
   },
   methods: {
     fetchTasks() {
+      //putting default value
       this.tasks = [
         { id: '1', title: 'Task 1', description: 'General Cleaning.', prioritized: false },
         { id: '2', title: 'Task 2', description: 'Washing Dishes.', prioritized: true }
       ];
     },
     addTask(task) {
+      //putting the receive value in tasks array
       this.tasks.push(task);
     },
     updateTask(updatedTask) {
+      //updating the task in tasks array
       const index = this.tasks.findIndex(task => task.id === updatedTask.id);
       if (index !== -1) {
         this.tasks.splice(index, 1, updatedTask);
       }
     },
     deleteTask(taskId) {
+      //deleting the task in tasks array
       this.tasks = this.tasks.filter(task => task.id !== taskId);
     },
     togglePrioritizeTask(taskId) {
+      //toggling the priority task in tasks array
       const task = this.tasks.find(task => task.id === taskId);
       if (task) {
         task.prioritized = !task.prioritized;
       }
     },
     completeTask(taskId) {
+      //completing the task in tasks array
       const taskIndex = this.tasks.findIndex(task => task.id === taskId);
       if (taskIndex !== -1) {
+        // Mark task as completed
         this.tasks[taskIndex].completed = true; 
         this.tasks = [...this.tasks];
       }
