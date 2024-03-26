@@ -122,7 +122,7 @@ export default {
 <style scoped>
 .manage-task {
   padding: 20px;
-  background: #F0F2F5;
+  background: #AEC2B6;
   max-width: 100%;
   min-height: 85vh;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -147,7 +147,7 @@ export default {
 .edit-button,
 .delete-button,
 .priority-button {
-  width: calc(100% - 20px);
+  width: calc(80% - 20px);
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
@@ -164,9 +164,11 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #5CACEE;
-  color: black;
+  background-color: #CCD6A6;
+  color: #32465A;
   margin-right: 10px;
+  width: 40%;
+  
 }
 
 .action-button:hover,
@@ -177,15 +179,18 @@ export default {
 }
 
 .edit-button {
-  background-color: #FFC107;
+  background-color: #7D8F69;
+  color: white;
 }
 
 .delete-button {
-  background-color: #F44336;
+  background-color: #7D8F69;
+  color: white;
 }
 
 .priority-button {
-  background-color: #4CAF50;
+  background-color: #7D8F69;
+  color: white;
 }
 
 .task-item,
@@ -206,9 +211,8 @@ export default {
 h1 {
   color: #32465A;
   margin-bottom: 20px;
-  text-align: center;
+ 
 }
-
 
 .buttons>button:last-child {
   margin-right: 0;
