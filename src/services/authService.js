@@ -18,6 +18,11 @@ export default {
     }
   },
 
+  logout() {
+    //this function to logout the user
+    localStorage.removeItem(TOKEN_KEY);
+    return Promise.resolve();
+  },
 
 
   isAuthenticated() {

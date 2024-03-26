@@ -63,6 +63,7 @@ export default {
         this.$router.replace('/login');
       }
     },
+  
     // Add task
     addTask() {
       // Check if title and description are not empty

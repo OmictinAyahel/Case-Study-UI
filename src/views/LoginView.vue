@@ -2,6 +2,7 @@
     <div class="login-page">
 
         <div class="login-container">
+
             <h5>admin:admin</h5>
             <h2>Login </h2>
             <h5 style="color: red;">{{ errorHandler }}</h5>
@@ -47,6 +48,8 @@ export default {
             authService.login(this.username, this.password)
                 .then(() => {
                     // Redirect to tasks page
+                    // Reload the window upon route changes
+                    window.location.reload();
                     this.$router.replace('/tasks');
                 })
                 .catch(() => {

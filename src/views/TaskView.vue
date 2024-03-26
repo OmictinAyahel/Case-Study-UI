@@ -40,6 +40,7 @@ import authService from '@/services/authService';
 export default {
   props: ['tasks'],
   mounted() {
+    
     //call the function for protecting the routes
    this.authenticated();
   },
