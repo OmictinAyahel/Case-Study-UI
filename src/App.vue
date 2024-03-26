@@ -91,6 +91,7 @@ export default {
 html,
 body {
   overflow: hidden;
+  background-color: black !important;
 }
 
 .nav-app {
@@ -104,9 +105,10 @@ body {
 }
 
 .nav-link-app {
-  text-decoration: none;
-  color: #007bff;
+  text-decoration: underline;
+  color: black;
   font-weight: bold;
+  font-size: 13px;
 }
 
 .nav-main {
@@ -127,4 +129,13 @@ body {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.btn-logout{
+  background: #5F7464;
+}
+
+.btn-logout:hover{
+  background: #007bff;
+}
+
 </style>
