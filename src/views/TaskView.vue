@@ -83,7 +83,7 @@ body {
 
 .task-view {
   padding: 20px;
-  background: #F0F2F5;
+  background: #AEC2B6;
   min-height: 80vh;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
@@ -103,7 +103,7 @@ h1 {
 
 .create-task-button {
   padding: 10px 20px;
-  background-color: #5CACEE;
+  background-color: #5F7464;
   color: white;
   border-radius: 20px;
   text-decoration: none;
