@@ -8,7 +8,7 @@
           <input class="input-field" v-model="taskTitle" placeholder="Task Title" />
 
           <input class="input-field" v-model="taskDescription" placeholder="Task Description" />
-          <button class="action-button" @click="addTask">Add Task</button>
+          <button class="action-button-task" @click="addTask">Add Task</button>
           <h5 style="color: red;"> {{ taskError }}</h5>
         </div>
       </div>
@@ -152,11 +152,12 @@ export default {
 }
 
 .input-field,
+.action-button-task,
 .action-button,
 .edit-button,
 .delete-button,
 .priority-button {
-  width: 100%;
+  width: 350px;
   padding: 8px 10px; 
   margin: 10px 0;
   border-radius: 5px;
@@ -166,8 +167,15 @@ export default {
   transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 }
 
+.action-button{
+
+  margin-left:20px;
+
+}
+
 .input-field:focus,
 .action-button:hover,
+.action-button-task:hover,
 .edit-button:hover,
 .delete-button:hover,
 .priority-button:hover {
@@ -175,6 +183,7 @@ export default {
 }
 
 .action-button,
+.action-button-task,
 .edit-button,
 .delete-button,
 .priority-button {
@@ -185,18 +194,14 @@ export default {
   background-color: #007BFF;
   color: white;
   font-size: 14px; 
-  width: 350px; 
-  margin-left: 20px;
+  
 }
 
-.action-button{
 
-  margin-left: 150px;
-
-}
 
 .edit-button:hover,
 .action-button:hover,
+.action-button-task:hover,
 .delete-button:hover,
 .priority-button:hover {
   background-color: #0056b3;
