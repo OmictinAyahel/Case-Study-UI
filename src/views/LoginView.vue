@@ -7,11 +7,11 @@
             <h5 style="color: red;">{{ errorHandler }}</h5>
             <form @submit.prevent="login" class="login-form">
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">Username: admin</label>
                     <input type="text" id="username" v-model="username" required />
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label for="password">Password: admin</label>
                     <input type="password" id="password" v-model="password" required />
                 </div>
                 <button type="submit" class="login-button">submit</button>
